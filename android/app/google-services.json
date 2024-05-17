@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "74449615104",
+    "project_id": "holkar-present",
+    "storage_bucket": "holkar-present.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74449615104:android:045c879fba1576bf3a9be5",
+        "android_client_info": {
+          "package_name": "com.example.holkar_present"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-JIyzVHh0YMtTDt8gWQcGLshWuRZU7XA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
