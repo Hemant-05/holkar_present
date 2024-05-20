@@ -43,124 +43,123 @@ class _SingUpScreenState extends State<SingUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const HolkarLogoName(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Register',
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w600,
-                        ),
+      body: Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const HolkarLogoName(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Text(
+                      'Register',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w600,
                       ),
-                      const SizedBox(
-                        height: 30,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    InkWell(
+                      onTap: onSelectImage,
+                      child: ProfileImage(
+                        file: file,
+                        size: 150,
                       ),
-                      InkWell(
-                        onTap: onSelectImage,
-                        child: ProfileImage(
-                          file: file,
-                          size: 150,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      AuthTextField(
-                        controller: emailController,
-                        hintText: 'Email',
-                        isObscure: false,
-                        inputType: TextInputType.multiline,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AuthTextField(
-                        controller: nameController,
-                        hintText: 'Name',
-                        isObscure: false,
-                        inputType: TextInputType.multiline,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AuthTextField(
-                        controller: contactController,
-                        hintText: 'Contact',
-                        isObscure: false,
-                        inputType: TextInputType.multiline,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Chooser(context, getValue),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AuthTextButton(
-                        text: 'Already have an account?',
-                        fun: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LogInScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    AuthTextField(
+                      controller: emailController,
+                      hintText: 'Email',
+                      isObscure: false,
+                      inputType: TextInputType.multiline,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AuthTextField(
+                      controller: nameController,
+                      hintText: 'Name',
+                      isObscure: false,
+                      inputType: TextInputType.multiline,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AuthTextField(
+                      controller: contactController,
+                      hintText: 'Contact',
+                      isObscure: false,
+                      inputType: TextInputType.multiline,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Chooser(context, getValue),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AuthTextButton(
+                      text: 'Already have an account?',
+                      fun: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LogInScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              AuthElevatedButton(
-                text: 'Next',
-                fun: () {
-                  Map<String, dynamic> userDetails = {
-                    'name': nameController.text.trim(),
-                    'email': emailController.text.trim(),
-                    'contact': contactController.text.trim(),
-                  };
-                  if (_selectedRole == 'Teacher') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeacherOtherDetailsScreen(
-                          details: userDetails,
-                        ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            AuthElevatedButton(
+              text: 'Next',
+              fun: () {
+                Map<String, dynamic> userDetails = {
+                  'name': nameController.text.trim(),
+                  'email': emailController.text.trim(),
+                  'number': contactController.text.trim(),
+                  'profile' : file,
+                };
+                if (_selectedRole == 'Teacher') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TeacherOtherDetailsScreen(
+                        details: userDetails,
                       ),
-                    );
-                  } else if (_selectedRole == 'Student') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => StudentOtherDetailsScreen(
-                          details: userDetails,
-                        ),
+                    ),
+                  );
+                } else if (_selectedRole == 'Student') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => StudentOtherDetailsScreen(
+                        details: userDetails,
                       ),
-                    );
-                  } else {
-                    ShowSnackBar(
-                        context, 'Please Select Role, than continue !');
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
+                    ),
+                  );
+                } else {
+                  ShowSnackBar(
+                      context, 'Please Select Role, than continue !');
+                }
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
         ),
       ),
     );

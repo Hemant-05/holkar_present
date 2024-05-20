@@ -42,6 +42,7 @@ dependencies:
   firebase_storage: ^11.7.5
   firebase_auth: ^4.19.5
   google_sign_in: ^6.2.1
+  multi_dropdown: ^2.1.4
 
 
 

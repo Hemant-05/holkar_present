@@ -6,6 +6,7 @@ import 'package:holkar_present/utils/Custom/AuthElevetedButton.dart';
 import 'package:holkar_present/utils/Custom/AuthTextButton.dart';
 import 'package:holkar_present/utils/Custom/AuthTextField.dart';
 import 'package:holkar_present/utils/Custom/HolkarLogoNameWidget.dart';
+import 'package:holkar_present/utils/Custom/ShowSnackBar.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -88,7 +89,8 @@ class _LogInScreenState extends State<LogInScreen> {
             AuthElevatedButton(
               text: 'Log In',
               fun: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen(),),);
+                ShowSnackBar(context, "continue to logging in");
+                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen(),),);
               },
             ),
             const SizedBox(

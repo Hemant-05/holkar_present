@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:holkar_present/screens/AttendanceScreen.dart';
 import 'package:holkar_present/screens/sing_up/SingUpScreen.dart';
 import 'package:holkar_present/utils/Coolers.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       home: const SafeArea(
-        child: SingUpScreen(),
+        child: AttendanceScreen(),
       ),
     );
   }

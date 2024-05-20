@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:holkar_present/screens/HomeScreen.dart';
 import 'package:holkar_present/screens/LogInScreen.dart';
 import 'package:holkar_present/utils/Constants.dart';
 

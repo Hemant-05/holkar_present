@@ -6,6 +6,9 @@ import 'package:holkar_present/utils/Custom/AuthElevetedButton.dart';
 import 'package:holkar_present/utils/Custom/AuthTextField.dart';
 import 'package:holkar_present/utils/Custom/HeightGap.dart';
 import 'package:holkar_present/utils/Custom/ProfileImage.dart';
+import 'package:holkar_present/utils/models/StuedntModel.dart';
+import 'package:holkar_present/utils/models/TeacherModel.dart';
+import 'package:holkar_present/utils/models/UserModel.dart';
 
 class StudentOtherDetailsScreen extends StatefulWidget {
   const StudentOtherDetailsScreen({super.key, required this.details});
@@ -21,9 +24,17 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
   TextEditingController passController = TextEditingController();
   TextEditingController conPassController = TextEditingController();
   TextEditingController rollNumController = TextEditingController();
-  String selSemester = '';
-  String selSubject = '';
-  String selSection = '';
+  String selSemester = semester[0];
+  String selSubject = subject[0];
+  String selSection = section[0];
+
+  @override
+  void dispose() {
+    super.dispose();
+    passController.dispose();
+    conPassController.dispose();
+    rollNumController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +84,11 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                         children: [
                           Column(
                             children: [
-                              upArrow(const Icon(Icons.arrow_drop_up_rounded,),),
+                              upArrow(
+                                const Icon(
+                                  Icons.arrow_drop_up_rounded,
+                                ),
+                              ),
                               Container(
                                 height: 50,
                                 width: 50,
@@ -106,7 +121,11 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                                       .toList(),
                                 ),
                               ),
-                              downArrow(const Icon(Icons.arrow_drop_down_rounded,),),
+                              downArrow(
+                                const Icon(
+                                  Icons.arrow_drop_down_rounded,
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -114,7 +133,11 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                           ),
                           Column(
                             children: [
-                              upArrow(const Icon(Icons.arrow_drop_up_rounded,),),
+                              upArrow(
+                                const Icon(
+                                  Icons.arrow_drop_up_rounded,
+                                ),
+                              ),
                               Container(
                                 height: 50,
                                 width: 100,
@@ -147,7 +170,11 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                                       .toList(),
                                 ),
                               ),
-                              downArrow(const Icon(Icons.arrow_drop_down_rounded,),),
+                              downArrow(
+                                const Icon(
+                                  Icons.arrow_drop_down_rounded,
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -155,7 +182,11 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                           ),
                           Column(
                             children: [
-                              upArrow(const Icon(Icons.arrow_drop_up_rounded,),),
+                              upArrow(
+                                const Icon(
+                                  Icons.arrow_drop_up_rounded,
+                                ),
+                              ),
                               Container(
                                 height: 50,
                                 width: 80,
@@ -188,7 +219,11 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                                       .toList(),
                                 ),
                               ),
-                              downArrow(const Icon(Icons.arrow_drop_down_rounded,),),
+                              downArrow(
+                                const Icon(
+                                  Icons.arrow_drop_down_rounded,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -223,11 +258,28 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
             AuthElevatedButton(
                 text: 'Create an Account',
                 fun: () {
-                  Navigator.pushReplacement(
+                  var map = widget.details;
+                  Student student = Student(
+                    roll: rollNumController.text.trim(),
+                    subject: selSubject,
+                    semester: selSemester,
+                    section: selSection,
+                    attendance: [],
+                  );
+                  UserModel model = UserModel(
+                    object: student,
+                    name: map['name'],
+                    email: map['email'],
+                    number: map['number'],
+                    profile: map['profile'],
+                    role: role[2],
+                  );
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
+                      builder: (context) => HomeScreen(model: model,),
                     ),
+                    (route) => false,
                   );
                 }),
             const HeightGap(
@@ -247,6 +299,7 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
       child: icon,
     );
   }
+
   Widget downArrow(Icon icon) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
