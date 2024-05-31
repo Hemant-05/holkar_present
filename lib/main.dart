@@ -1,9 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:holkar_present/screens/AttendanceScreen.dart';
-import 'package:holkar_present/screens/sing_up/SingUpScreen.dart';
+import 'package:holkar_present/firebase_options.dart';
+import 'package:holkar_present/screens/SplashScreen.dart';
 import 'package:holkar_present/utils/Coolers.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -24,7 +29,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       home: const SafeArea(
-        child: AttendanceScreen(),
+        child: SplashScreen(),
       ),
     );
   }

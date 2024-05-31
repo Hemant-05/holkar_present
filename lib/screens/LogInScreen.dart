@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:holkar_present/FirebaseMeth/FirebaseAuthServices.dart';
 import 'package:holkar_present/screens/HomeScreen.dart';
 import 'package:holkar_present/screens/sing_up/SingUpScreen.dart';
 import 'package:holkar_present/utils/Custom/AuthElevetedButton.dart';
@@ -18,6 +20,7 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  bool loading = false;
 
   @override
   void dispose() {
@@ -88,9 +91,28 @@ class _LogInScreenState extends State<LogInScreen> {
             ),
             AuthElevatedButton(
               text: 'Log In',
-              fun: () {
-                ShowSnackBar(context, "continue to logging in");
-                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen(),),);
+              loading: loading,
+              fun: () async {
+                String email = emailController.text.trim();
+                String pass = passController.text.trim();
+                User? user;
+                setState(() {
+                  loading = true;
+                });
+                user = await FirebaseAuthServices(auth: FirebaseAuth.instance).logIn(email: email, pass: pass, context: context);
+                if(user != null) {
+                  setState(() {
+                    loading = false;
+                  });
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),),);
+                }
+                else{
+                  ShowSnackBar(context, 'Problem while log in');
+                }
+                setState(() {
+                  loading = false;
+                });
               },
             ),
             const SizedBox(

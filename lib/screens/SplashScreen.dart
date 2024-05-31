@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:holkar_present/screens/HomeScreen.dart';
 import 'package:holkar_present/screens/LogInScreen.dart';
 import 'package:holkar_present/utils/Constants.dart';
 
@@ -15,10 +17,30 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LogInScreen(),));
-    });
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    Timer(
+      const Duration(seconds: 1),
+      () {
+        if (_auth.currentUser == null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LogInScreen(),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+          );
+        }
+      },
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

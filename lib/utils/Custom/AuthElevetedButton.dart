@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:holkar_present/utils/Coolers.dart';
 
 class AuthElevatedButton extends StatelessWidget {
-  const AuthElevatedButton({super.key, required this.text, required this.fun});
+  const AuthElevatedButton({super.key, required this.text, required this.fun, required this.loading});
 
   final String text;
   final VoidCallback fun;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class AuthElevatedButton extends StatelessWidget {
             ),
           ),
         ),
-        child: Text(
+        child: loading? const Center(child: CircularProgressIndicator(),): Text(
           text,
           style: const TextStyle(
               fontSize: 26, fontWeight: FontWeight.w600, color: black),

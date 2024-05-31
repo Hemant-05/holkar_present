@@ -43,6 +43,11 @@ dependencies:
   firebase_auth: ^4.19.5
   google_sign_in: ^6.2.1
   multi_dropdown: ^2.1.4
+  cloud_firestore: ^4.17.3
+  uuid: ^4.4.0
+  cached_network_image: ^3.3.1
+  shared_preferences: ^2.2.3
+  flutter_card_swiper: ^7.0.1
 
 
 

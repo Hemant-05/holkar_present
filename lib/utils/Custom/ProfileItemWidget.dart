@@ -14,11 +14,11 @@ class ProfileItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
       child: Row(
         children: [
           Text(left,style: style(),),
-          SizedBox(width: 5,),
+          const SizedBox(width: 5,),
           Text(right,style: style(),),
         ],
       ),
