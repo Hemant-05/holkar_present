@@ -127,7 +127,9 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
                         'name': model.name,
                         'profile': model.profile,
                         'uid': _auth.currentUser!.uid,
-                        'roll': student.roll, // change here with roll number
+                        'roll': student.roll,
+                        'email' : model.email,
+                        'number' : model.number,
                       };
                       setState(() {
                         list.add(map);

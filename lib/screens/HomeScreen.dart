@@ -25,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   DateTime? _selectedDay;
   UserModel? model;
   Teacher? teacher;
@@ -52,11 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void user() async {
     model = await FirebaseFireStoreServices(
-            auth: FirebaseAuth.instance, firestore: _firestore)
-        .getUserData(FirebaseAuth.instance.currentUser!.uid);
-    isStudent = await getBoolValue();
-    print('============================ $isStudent');
-    print('${model!.name}=========================');
+            auth: _auth, firestore: _firestore)
+        .getUserData(_auth.currentUser!.uid);
+    isStudent = model!.role == role[2];
     if (isStudent) {
       student = model!.object as Student;
       List list = student!.attendance;
@@ -68,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       teacher = model!.object as Teacher;
     }
-
     setState(() {
       loading = false;
     });

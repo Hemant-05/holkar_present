@@ -54,16 +54,13 @@ class FirebaseFireStoreServices {
           .collection(role[2])
           .doc(uid)
           .get();
-      if(doc.data() == null){
+      if(doc.data() == null) {
         doc = await _firestore
             .collection('user')
             .doc(userDocId)
             .collection(role[1])
             .doc(uid)
             .get();
-        if(doc.data()!= null){
-          setBoolValue(false);
-        }
       }
       Map<String, dynamic>? data = doc.data();
       Teacher teacher;

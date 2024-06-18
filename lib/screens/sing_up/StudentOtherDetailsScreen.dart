@@ -272,9 +272,6 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                     text: 'Create an Account',
                     loading: loading,
                     fun: () async {
-                      setState(() {
-                        loading = true;
-                      });
                       var map = widget.details;
                       Student student = Student(
                         roll: rollNumController.text.trim(),
@@ -296,6 +293,9 @@ class _StudentOtherDetailsScreenState extends State<StudentOtherDetailsScreen> {
                       String conPass = conPassController.text.trim();
                       User? user;
                       if (pass == conPass) {
+                        setState(() {
+                          loading = true;
+                        });
                         user = await FirebaseAuthServices(
                                 auth: FirebaseAuth.instance)
                             .signUp(

@@ -109,9 +109,6 @@ class _TeacherOtherDetailsScreenState extends State<TeacherOtherDetailsScreen> {
                       text: 'Create an Account',
                       loading: loading,
                       fun: () async {
-                        setState(() {
-                          loading = true;
-                        });
                         var map = widget.details;
                         Teacher teacher = Teacher(
                           sections: selectedSection,
@@ -131,6 +128,9 @@ class _TeacherOtherDetailsScreenState extends State<TeacherOtherDetailsScreen> {
                         String conPass = conPassController.text.trim();
                         User? user;
                         if (pass == conPass) {
+                          setState(() {
+                            loading = true;
+                          });
                           user = await FirebaseAuthServices(
                                   auth: FirebaseAuth.instance)
                               .signUp(

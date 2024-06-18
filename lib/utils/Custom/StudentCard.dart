@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:holkar_present/utils/Custom/ProfileImage.dart';
 
 class StudentCard extends StatelessWidget {
-  const StudentCard({super.key});
+  const StudentCard({super.key, required this.map});
+  final Map<String,dynamic> map;
 
   @override
   Widget build(BuildContext context) {
@@ -11,17 +12,28 @@ class StudentCard extends StatelessWidget {
         height: 450,
         width: 300,
         decoration: BoxDecoration(
-          color: Colors.white70,
+          color: Colors.white60,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              'Hemant sahu',
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20,top: 10),
+                  child: Text(
+                    map['roll'],
+                    style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
-            ProfileImage(file: null, size: 150, fileUrl: ''),
+            ProfileImage(file: null, size: 150, fileUrl: map['profile']),
+            Text(
+              map['name'],
+              style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
             Container(
               height: 150,
               width: double.infinity,
@@ -30,11 +42,9 @@ class StudentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('Roll No. :- 66',
+                  Text('Email :- ${map['email']}',
                       style: cusStyle()),
-                  Text('Father\'s name :- Mr. Shankar lal sahu',
-                      style: cusStyle()),
-                  Text('Contact :- 9098752169',
+                  Text('Number :- ${map['number']}',
                       style: cusStyle()),
                 ],
               ),
