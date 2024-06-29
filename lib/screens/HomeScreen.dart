@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:holkar_present/FirebaseMeth/FirebaseFireStoreServices.dart';
-import 'package:holkar_present/screens/AttendanceScreen.dart';
+import 'package:holkar_present/screens/AttendanceShowingScreen.dart';
 import 'package:holkar_present/screens/JoinRoomScreen.dart';
 import 'package:holkar_present/screens/ProfileScreen.dart';
 import 'package:holkar_present/screens/SelectOrCreateAttendanceRoomScreen.dart';
@@ -87,44 +87,47 @@ class _HomeScreenState extends State<HomeScreen> {
         : Scaffold(
             appBar: AppBar(
               backgroundColor: bg,
-              toolbarHeight: 100,
+              toolbarHeight: 120,
               centerTitle: true,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        model!.name,
-                        style: style(20),
-                      ),
-                      Text(
-                        isStudent ? student!.section : sections,
-                        style: style(),
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProfileScreen(
-                            model: model!,
-                          ),
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          model!.name,
+                          style: style(20),
                         ),
-                      );
-                    },
-                    child: Hero(
-                      tag: 'profile',
-                      child: ProfileImage(
-                        file: null,
-                        fileUrl: model!.profile,
-                        size: 100,
+                        Text(
+                          isStudent ? student!.section : sections,
+                          style: style(),
+                        ),
+                      ],
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              model: model!,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Hero(
+                        tag: 'profile',
+                        child: ProfileImage(
+                          file: null,
+                          fileUrl: model!.profile,
+                          size: 100,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             body: Container(
@@ -217,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AttendanceScreen(
+                                builder: (context) => AttendanceShowingScreen(
                                   attendance: student!.attendance,
                                 ),
                               ),
@@ -244,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget Calendar() {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration:
           BoxDecoration(color: white, borderRadius: BorderRadius.circular(15)),
       child: TableCalendar(

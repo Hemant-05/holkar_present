@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key, required this.attendance});
+class AttendanceShowingScreen extends StatefulWidget {
+  const AttendanceShowingScreen({super.key, required this.attendance});
 
   final List attendance;
 
   @override
-  State<AttendanceScreen> createState() => _AttendanceState();
+  State<AttendanceShowingScreen> createState() => _AttendanceState();
 }
 
-class _AttendanceState extends State<AttendanceScreen> {
+class _AttendanceState extends State<AttendanceShowingScreen> {
   List list = [];
   int ld = 30;
 

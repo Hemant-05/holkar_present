@@ -18,27 +18,27 @@ class FirebaseFireStoreServices {
   })  : _firestore = firestore,
         _auth = auth;
 
-  Future<void> joinRoom(String roomId,Map<String, dynamic> map) async{
+  Future<void> joinRoom(String roomId,String uid) async{
     try{
         _firestore.collection('attendance_room').doc(roomId).update({
-          'students': FieldValue.arrayUnion([map])
+          'students_uid': FieldValue.arrayUnion([uid])
         });
     }catch(e){
       print(e.toString());
     }
   }
+
+  Future<void> updateProfile()async{}
+
   Future<void> createAttendanceRoom(String title,BuildContext context) async{
     try{
-      UserModel? model = await getUserData(_auth.currentUser!.uid);
       String uid = Uuid().v1();
       _firestore.collection('attendance_room').doc(uid).set({
         'attendance' : [],
         'uid' : uid,
         'title' : title,
-        'students' : [],
-        'teacher_name' : model!.name,
+        'students_uid' : [],
         'teacher_uid' : _auth.currentUser!.uid,
-        'teacher_profile' : model.profile
       });
       ShowSnackBar(context, '$title Attendance room created successfully......');
     }on FirebaseException catch(e){
