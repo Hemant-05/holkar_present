@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AttendanceShowingScreen(
+                                builder: (context) => AttendanceShowingScreen( ///////////////////////////////////////////////
                                   attendance: student!.attendance,
                                 ),
                               ),

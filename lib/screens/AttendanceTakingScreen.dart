@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:holkar_present/FirebaseMeth/FirebaseFireStoreServices.dart';
+import 'package:holkar_present/utils/Constants.dart';
 import 'package:holkar_present/utils/Coolers.dart';
 import 'package:holkar_present/utils/Custom/ShowSnackBar.dart';
 import 'package:holkar_present/utils/Custom/StudentCard.dart';
@@ -73,16 +74,17 @@ class _AttendanceTakingScreenState extends State<AttendanceTakingScreen> {
     Navigator.pop(context);
   }
 
-
-  void addPageToPdf(var pdf,int index){
+  void addPageToPdf(var pdf, int index) {
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) {
           return pw.Column(
             children: [
-              (index < 1 )? pw.Text(getFileName(),
-                  style: pw.TextStyle(
-                      fontSize: 20, fontWeight: pw.FontWeight.bold)) : pw.SizedBox(height: 2),
+              (index < 1)
+                  ? pw.Text(getFileName(),
+                      style: pw.TextStyle(
+                          fontSize: 20, fontWeight: pw.FontWeight.bold))
+                  : pw.SizedBox(height: 2),
               pw.SizedBox(height: 20),
               pw.Table(
                 border: pw.TableBorder.all(),
@@ -92,24 +94,25 @@ class _AttendanceTakingScreenState extends State<AttendanceTakingScreen> {
                       pw.Center(
                         child: pw.Text('R. No.',
                             style: pw.TextStyle(
-                                fontSize: 20,
-                                fontWeight: pw.FontWeight.bold)),
+                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
                       ),
                       pw.Center(
                         child: pw.Text('Attendance',
                             style: pw.TextStyle(
-                                fontSize: 20,
-                                fontWeight: pw.FontWeight.bold)),
+                                fontSize: 20, fontWeight: pw.FontWeight.bold)),
                       ),
                     ],
                   ),
-                  for(int i = index; i < (index + 45) && i < (attendance_list.length); i++)
+                  for (int i = index;
+                      i < (index + 45) && i < (attendance_list.length);
+                      i++)
                     pw.TableRow(children: [
                       pw.Center(
                         child: pw.Text(attendance_list[i]['Roll'].toString()),
                       ),
                       pw.Center(
-                        child: pw.Text(attendance_list[i]['Attendance'].toString()),
+                        child: pw.Text(
+                            attendance_list[i]['Attendance'].toString()),
                       )
                     ]),
                 ],
@@ -124,6 +127,12 @@ class _AttendanceTakingScreenState extends State<AttendanceTakingScreen> {
   void excelFormat() {
     ShowSnackBar(
         context, 'This is format is currently not supported by the app !!');
+  }
+
+  void uploadAttendance() {
+    String time = DateFormat('yyyy-MMM-dd HH:mm').format(DateTime.now());
+    FirebaseFireStoreServices(auth: _auth, firestore: _firestore)
+        .syncAttendance(attendance_list, widget.map['uid'], time);
   }
 
   String getFileName() {
@@ -279,14 +288,40 @@ class _AttendanceTakingScreenState extends State<AttendanceTakingScreen> {
                         numberOfCardsDisplayed: 2,
                         isLoop: false,
                         onEnd: () async {
+                          uploadAttendance();
                           requestStoragePermission();
                         },
                         onSwipe: (previousIndex, currentIndex, direction) {
-                          int i =
-                              int.parse(student_list[previousIndex]['object'].roll);
+                          int i = int.parse(
+                              student_list[previousIndex]['object'].roll);
                           --i;
                           if (direction == CardSwiperDirection.top) {
-                            attendance_list[i]['Attendance'] = '${student_list[previousIndex]['name']}' + ' : P';
+                            attendance_list[i]['Attendance'] =
+                                '${student_list[previousIndex]['name']}' +
+                                    ' : P';
+                            _firestore
+                                .collection('user')
+                                .doc(userDocId)
+                                .collection('Student')
+                                .doc(student_list[previousIndex]['uid'])
+                                .update({
+                              'attendance' : FieldValue.arrayUnion([{
+                                'date' : DateTime.now(),
+                                'attendance' : 'P' ,
+                              }]),
+                            });
+                          } else {
+                            _firestore
+                                .collection('user')
+                                .doc(userDocId)
+                                .collection('Student')
+                                .doc(student_list[previousIndex]['uid'])
+                                .update({
+                              'attendance' : FieldValue.arrayUnion([{
+                                'date' : DateTime.now(),
+                                'attendance' : 'A' ,
+                              }]),
+                            });
                           }
                           return true;
                         },
@@ -297,11 +332,11 @@ class _AttendanceTakingScreenState extends State<AttendanceTakingScreen> {
                             horizontalOffsetPercentage,
                             verticalOffsetPercentage) {
                           Map<String, dynamic> map = {
-                            'roll' : student_list[index]['object'].roll,
-                            'name' : student_list[index]['name'],
-                            'email' : student_list[index]['email'],
-                            'number' : student_list[index]['number'],
-                            'profile' : student_list[index]['profile'],
+                            'roll': student_list[index]['object'].roll,
+                            'name': student_list[index]['name'],
+                            'email': student_list[index]['email'],
+                            'number': student_list[index]['number'],
+                            'profile': student_list[index]['profile'],
                           };
                           return StudentCard(map: map);
                         },

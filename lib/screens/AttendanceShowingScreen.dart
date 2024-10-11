@@ -13,6 +13,8 @@ class AttendanceShowingScreen extends StatefulWidget {
 class _AttendanceState extends State<AttendanceShowingScreen> {
   List list = [];
   int ld = 30;
+  int d = 0;
+  double appBarHeight = 60;
 
   @override
   void initState() {
@@ -35,6 +37,7 @@ class _AttendanceState extends State<AttendanceShowingScreen> {
     ),);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,26 +47,49 @@ class _AttendanceState extends State<AttendanceShowingScreen> {
           DateFormat('MMMM yyyy').format(DateTime.now()),
           style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
         ),
+        actions: [
+          IconButton(onPressed: (){
+            if(appBarHeight == 250){
+              appBarHeight = 60;
+            }else{
+              appBarHeight = 250;
+            }
+          }, icon: Icon(Icons.arrow_drop_down_rounded)),
+        ],
+        toolbarHeight: appBarHeight,
       ),
       body: Container(
         padding: const EdgeInsets.all(5),
-        child: GridView.builder(
-          itemCount: ld,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5),
-          itemBuilder: (context, index) {
-            Color color;
-            if (index < list.length) {
-              color = list[index] == 'P'
-                  ? Colors.green
-                  : list[index] == 'A'
-                  ? Colors.red
-                  : Colors.grey;
-            } else {
-              color = Colors.grey;
-            }
-            return DateContainer(color, '${index + 1}');
-          },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              /*AnimatedContainer(duration: Duration(seconds: 1)
+              ,height: appBarHeight,color: Colors.grey,),*/
+             /* GridView.builder(
+                itemCount: ld,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5),
+                itemBuilder: (context, index) {
+                  d++;
+                  Color color;
+                  var date = 0;
+                    try{
+                       date = int.parse(DateFormat('d').format(list[index]['date'].toDate()));
+                       print("Both date are d : $d || $date");
+                       if(date == d){
+                         color = list[index]['attendance'] == 'P'? Colors.green : Colors.red;
+                       }else{
+                         color = Colors.grey;
+                       }
+                    }catch(e){
+                      print("This is an error $e");
+                      color  = Colors.grey;
+                    }
+                  return DateContainer(color, '${1}');
+                },
+              ),*/
+            ],
+          ),
         ),
       ),
     );
@@ -80,7 +106,7 @@ class _AttendanceState extends State<AttendanceShowingScreen> {
       ),
       alignment: Alignment.center,
       child: Text(
-        date,
+        d.toString(),
         style: const TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,

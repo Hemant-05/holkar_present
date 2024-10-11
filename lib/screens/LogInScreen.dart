@@ -32,92 +32,97 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const HolkarLogoName(),
-            const Text(
-              'Log In',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              child: Column(
-                children: [
-                  AuthTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    inputType: TextInputType.emailAddress,
-                    isObscure: false,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AuthTextField(
-                    controller: passController,
-                    hintText: 'Password',
-                    inputType: TextInputType.multiline,
-                    isObscure: true,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AuthTextButton(
-                    text: 'Don\'t have an account?',
-                    fun: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SingUpScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const HolkarLogoName(),
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            AuthElevatedButton(
-              text: 'Log In',
-              loading: loading,
-              fun: () async {
-                String email = emailController.text.trim();
-                String pass = passController.text.trim();
-                User? user;
-                setState(() {
-                  loading = true;
-                });
-                user = await FirebaseAuthServices(auth: FirebaseAuth.instance).logIn(email: email, pass: pass, context: context);
-                if(user != null) {
+              const Text(
+                'Log In',
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 60,
+              ),
+              Container(
+                child: Column(
+                  children: [
+                    AuthTextField(
+                      controller: emailController,
+                      hintText: 'Email',
+                      inputType: TextInputType.emailAddress,
+                      isObscure: false,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AuthTextField(
+                      controller: passController,
+                      hintText: 'Password',
+                      inputType: TextInputType.multiline,
+                      isObscure: true,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AuthTextButton(
+                      text: 'Don\'t have an account?',
+                      fun: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SingUpScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              AuthElevatedButton(
+                text: 'Log In',
+                loading: loading,
+                fun: () async {
+                  String email = emailController.text.trim();
+                  String pass = passController.text.trim();
+                  User? user;
+                  setState(() {
+                    loading = true;
+                  });
+                  user = await FirebaseAuthServices(auth: FirebaseAuth.instance).logIn(email: email, pass: pass, context: context);
+                  if(user != null) {
+                    setState(() {
+                      loading = false;
+                    });
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),),);
+                  }
+                  else{
+                    ShowSnackBar(context, 'Problem while log in');
+                  }
                   setState(() {
                     loading = false;
                   });
-                  Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => const HomeScreen(),),);
-                }
-                else{
-                  ShowSnackBar(context, 'Problem while log in');
-                }
-                setState(() {
-                  loading = false;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-          ],
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );

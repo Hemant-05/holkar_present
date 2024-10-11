@@ -30,6 +30,16 @@ class FirebaseFireStoreServices {
 
   Future<void> updateProfile()async{}
 
+  Future<void> syncAttendance(List list,String roomId,String time) async {
+    Map map = {
+      'time' : time,
+      'attendance' : list
+    };
+    _firestore.collection('attendance_room').doc(roomId).update({
+      'attendance' : FieldValue.arrayUnion([map])
+    });
+  }
+
   Future<void> createAttendanceRoom(String title,BuildContext context) async{
     try{
       String uid = Uuid().v1();

@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 class Student {
   final String roll;
   final String subject;

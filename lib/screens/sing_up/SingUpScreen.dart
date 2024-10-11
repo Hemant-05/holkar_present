@@ -4,7 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:holkar_present/FirebaseMeth/FirebaseFireStoreServices.dart';
 import 'package:holkar_present/FirebaseMeth/FirebaseStorageServices.dart';
 import 'package:holkar_present/screens/LogInScreen.dart';
 import 'package:holkar_present/screens/sing_up/StudentOtherDetailsScreen.dart';
@@ -48,6 +47,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
             body: Container(
               width: double.infinity,
               alignment: Alignment.center,
