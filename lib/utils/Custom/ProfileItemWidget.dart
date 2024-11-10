@@ -9,6 +9,7 @@ class ProfileItemWidget extends StatelessWidget {
     return TextStyle(
       fontSize: size,
       fontWeight: weight,
+      overflow: TextOverflow.ellipsis
     );
   }
   @override
@@ -19,7 +20,7 @@ class ProfileItemWidget extends StatelessWidget {
         children: [
           Text(left,style: style(),),
           const SizedBox(width: 5,),
-          Text(right,style: style(),),
+          Expanded(child: Text(right,style: style(),)),
         ],
       ),
     );

@@ -12,7 +12,6 @@ import 'package:holkar_present/utils/models/StuedntModel.dart';
 import 'package:holkar_present/utils/models/UserModel.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class AttendanceTakingScreen extends StatefulWidget {
@@ -165,19 +164,6 @@ class _AttendanceTakingScreenState extends State<AttendanceTakingScreen> {
     );
   }
 
-  Future<void> requestStoragePermission() async {
-    PermissionStatus status = await Permission.storage.request();
-    if (status.isGranted) {
-      print('Storage permission granted');
-      showDoneAttendanceDialogBox();
-    } else if (status.isDenied) {
-      print('Storage permission denied');
-      Navigator.pop(context);
-    } else if (status.isPermanentlyDenied) {
-      print('Storage permission permanently denied');
-      Navigator.pop(context);
-    }
-  }
 
   @override
   void initState() {
@@ -289,7 +275,7 @@ class _AttendanceTakingScreenState extends State<AttendanceTakingScreen> {
                         isLoop: false,
                         onEnd: () async {
                           uploadAttendance();
-                          requestStoragePermission();
+                          showDoneAttendanceDialogBox();
                         },
                         onSwipe: (previousIndex, currentIndex, direction) {
                           int i = int.parse(

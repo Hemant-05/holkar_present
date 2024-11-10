@@ -12,9 +12,11 @@ import 'package:holkar_present/utils/Constants.dart';
 import 'package:holkar_present/utils/Coolers.dart';
 import 'package:holkar_present/utils/Custom/AuthElevetedButton.dart';
 import 'package:holkar_present/utils/Custom/ProfileImage.dart';
+import 'package:holkar_present/utils/Custom/ShowSnackBar.dart';
 import 'package:holkar_present/utils/models/StuedntModel.dart';
 import 'package:holkar_present/utils/models/TeacherModel.dart';
 import 'package:holkar_present/utils/models/UserModel.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,6 +51,17 @@ class _HomeScreenState extends State<HomeScreen> {
       loading = true;
     });
     user();
+  }
+
+  Future<void> requestStoragePermission() async {
+    PermissionStatus status = await Permission.microphone.request();
+    if (status.isGranted) {
+      ShowSnackBar(context, 'Storage permission granted');
+    } else if (status.isDenied) {
+      ShowSnackBar(context, 'Storage permission denied');
+    } else if (status.isPermanentlyDenied) {
+      ShowSnackBar(context, 'Storage permission permanently denied');
+    }
   }
 
   void user() async {
@@ -220,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AttendanceShowingScreen( ///////////////////////////////////////////////
+                                builder: (context) => AttendanceShowingScreen(
                                   attendance: student!.attendance,
                                 ),
                               ),
@@ -229,6 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       : AuthElevatedButton(
                           fun: () {
+                            // requestStoragePermission();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
